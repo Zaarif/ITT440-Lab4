@@ -1,13 +1,12 @@
-#include<stdio.h>
-#include<sys/socket.h>
-#include<arpa/inet.h>	//inet_addr
-#include<string.h>
+#include <string.h>
+# include <stdio.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>	
 
-int main(int argc , char *argv[])
-{
+int main(int argc , char *argv[]) {
 	int socket_desc;
-        char server_reply[2000];
-	struct sockaddr_in server; 
+        void server_reply;
+	struct sockaddr_in server;
               char *message;
 	
 	//Create socket
@@ -19,8 +18,7 @@ int main(int argc , char *argv[])
 		
 	server.sin_addr.s_addr = inet_addr("192.168.1.107"); //Please enter the ip address of your Server VM
 	server.sin_family = AF_INET;
-	server.sin_port = htons( 8888 );
-
+	server.sin_port = htons( 22 );
 	//Connect to remote server
 	if (connect(socket_desc , (struct sockaddr *)&server , sizeof(server)) < 0)
 	{
@@ -29,7 +27,6 @@ int main(int argc , char *argv[])
 	}
 	
 	puts("Connected \n");
-
 	//Send some data
 	message = "connect";
 	if( send(socket_desc , message , strlen(message) , 0) < 0)
@@ -45,7 +42,5 @@ int main(int argc , char *argv[])
 	}
 	puts("Reply received\n");
 	puts(server_reply);
-
 	return 0;
 }
-
